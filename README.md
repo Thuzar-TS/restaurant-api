@@ -4,11 +4,10 @@ This is a simple backend api project.
 
 ### USING LANGUAGE
 
-- PHP (LARAVEL)
+- PHP (LARAVEL 7)
 
 ### PREREQUISITES
 
-- Laravel 7.3
 - PHP 7.3
 - MySQL
 
