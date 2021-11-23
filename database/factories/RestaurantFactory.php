@@ -8,7 +8,8 @@ use Faker\Generator as Faker;
 $factory->define(Restaurant::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
-        'type' => rand(1, 9),
+        // 'type' => rand(1, 9),
+        'type' => "Restaurant Type",
         'opening_hour' => '9:00AM',
         'closing_hour' => '9:00PM',
         'logo' => 'restaurants/name/logo.png',

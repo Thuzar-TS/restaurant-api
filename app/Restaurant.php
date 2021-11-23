@@ -9,7 +9,7 @@ class Restaurant extends Model
     protected $table ="restaurants";
     protected $fillable = ['name', 'type', 'opening_hour', 'closing_hour', 'logo', 'description', 'address'];
 
-    public function type(){
-        return $this->belongsTo(Type::class);
-    }
+    // public function type(){
+    //     return $this->belongsTo(Type::class);
+    // }
 }
