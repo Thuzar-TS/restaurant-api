@@ -11,20 +11,20 @@ use App\Http\Controllers\Controller;
 class RestaurantController extends Controller
 {
     /**
-     * @return RestaurantResource
-     */
-    public function show(Restaurant $restaurant): RestaurantResource
-    {
-        return new RestaurantResource($restaurant);
-    }
-
-    /**
      * @return RestaurantResourceCollection
      */
     public function index(): RestaurantResourceCollection
     {
         return new RestaurantResourceCollection(Restaurant::paginate());
     }
+
+    /**
+     * @return RestaurantResource
+     */
+    public function show(Restaurant $restaurant): RestaurantResource
+    {
+        return new RestaurantResource($restaurant);
+    }    
 
     /**
      * @param Request $request
