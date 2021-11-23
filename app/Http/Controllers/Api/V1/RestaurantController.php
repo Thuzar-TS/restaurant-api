@@ -7,6 +7,8 @@ use App\Http\Resources\RestaurantResourceCollection;
 use App\Restaurant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
+use App\Helpers\CustomLog;
 
 class RestaurantController extends Controller
 {
@@ -42,7 +44,21 @@ class RestaurantController extends Controller
             'address' => 'required',
         ]);
 
-        $restaurant = Restaurant::create($request->all());
+        DB::beginTransaction();
+        try {
+            $restaurant = Restaurant::create($request->all());
+            CustomLog::info("Create New Restaurant ID ".$restaurant->id);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                'error' => [
+                    'status' => 500,
+                    'message' => $e->getMessage(),
+                ]
+            ], 500);
+        }
 
         return new RestaurantResource($restaurant);
     }
@@ -54,7 +70,21 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, Restaurant $restaurant): RestaurantResource
     {
-        $restaurant->update($request->all());
+        DB::beginTransaction();
+        try {
+            $restaurant->update($request->all());
+            CustomLog::info("Update Restaurant ID ".$restaurant->id);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                'error' => [
+                    'status' => 500,
+                    'message' => $e->getMessage(),
+                ]
+            ], 500);
+        }
 
         return new RestaurantResource($restaurant);
     }
@@ -68,6 +98,7 @@ class RestaurantController extends Controller
     {
         $delete_id = $restaurant->id;
         $restaurant->delete();
+        CustomLog::info("Delete Restaurant ID ".$delete_id);
 
         return response()->json([
 			'deleted_id' => $delete_id
